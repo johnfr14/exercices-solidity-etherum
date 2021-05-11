@@ -12,7 +12,7 @@ contract PayableCalculator {
     // State variables
     mapping(address => uint256) private _balances;
     address private _owner;
-    uint256 private _counter
+    uint256 private _counter;
     
     // Events
     event Added(address indexed account, int256 res);
@@ -22,7 +22,7 @@ contract PayableCalculator {
         _owner = msg.sender;
     }
     
-    modifier hasEnoughFinney(address user) {
+    modifier hasEnoughFinney() {
         require(msg.value >= 1e15, "PayableCalculator: not enought money, you need pay at least 1 finney to execute the function");
         _;
     }
@@ -33,38 +33,38 @@ contract PayableCalculator {
     }
     
     
-    function add(int256 nb1, int256 nb2) public payable hasEnoughFinney(msg.sender) returns(int256) {
+    function add(int256 nb1, int256 nb2) public payable hasEnoughFinney returns(int256) {
         _balances[_owner] += msg.value;
         emit Added(msg.sender, nb1 + nb2);
-        _counter++
+        _counter++;
         return nb1 + nb2;
     }
     
-    function sub(int256 nb1, int256 nb2) public payable hasEnoughFinney(msg.sender) returns(int256) {
+    function sub(int256 nb1, int256 nb2) public payable hasEnoughFinney returns(int256) {
         _balances[_owner] += msg.value;
         emit Added(msg.sender, nb1 - nb2);
-        _counter++
+        _counter++;
         return nb1 - nb2;
     }
     
-    function mul(int256 nb1, int256 nb2) public payable hasEnoughFinney(msg.sender) returns(int256) {
+    function mul(int256 nb1, int256 nb2) public payable hasEnoughFinney returns(int256) {
         _balances[_owner] += msg.value;
         emit Added(msg.sender, nb1 * nb2);
-        _counter++
+        _counter++;
         return nb1 * nb2;
     }
     
-    function div(int256 nb1, int256 nb2) public payable hasEnoughFinney(msg.sender) returns(int256) {
+    function div(int256 nb1, int256 nb2) public payable hasEnoughFinney returns(int256) {
         _balances[_owner] += msg.value;
         emit Added(msg.sender, nb1 / nb2);
-        _counter++
+        _counter++;
         return nb1 / nb2;
     }
     
-    function mod(int256 nb1, int256 nb2) public payable hasEnoughFinney(msg.sender) returns(int256) {
+    function mod(int256 nb1, int256 nb2) public payable hasEnoughFinney returns(int256) {
         _balances[_owner] += msg.value;
         emit Added(msg.sender, nb1 % nb2);
-        _counter++
+        _counter++;
         return nb1 % nb2;
     }
     
@@ -80,8 +80,7 @@ contract PayableCalculator {
         return _balances[_owner];
     }
     
-    function seeCounter() public view return(uint256) {
+    function seeCounter() public view returns(uint256) {
         return _counter;
     }
-    
 }
